@@ -2443,16 +2443,15 @@ buildFS()
 	
 	# creates cShell user inside chroot
 	# creates group 
-	addgroup --quiet --gid "${CSHELL_GID}" "${CSHELL_GROUP}" 2>/dev/null ||true
+	addgroup --gid "${CSHELL_GID}" "${CSHELL_GROUP}"
 	# creates user
-	adduser --quiet \
-	        --uid "${CSHELL_UID}" \
+	adduser --uid "${CSHELL_UID}" \
 	        --gid "${CSHELL_GID}" \
 	        --no-create-home \
 	        --disabled-password \
 	        --home "${CSHELL_HOME}" \
 	        --gecos "Checkpoint Agent" \
-	        "${CSHELL_USER}" 2>/dev/null || true
+	        "${CSHELL_USER}"
 
 	# adjusts file and directory permissions
 	# creates homedir 
