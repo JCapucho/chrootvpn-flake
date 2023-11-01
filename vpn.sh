@@ -2680,18 +2680,18 @@ chrootEnd()
       rm -f "${ROOTHOME}/chroot_setup.sh" "${ROOTHOME}/cshell_install.sh" "${ROOTHOME}/snx_install.sh" 
 
       # copy this script to /usr/local/bin
-      cp "${SCRIPT}" "${INSTALLSCRIPT}"
-      chmod a+rx "${INSTALLSCRIPT}"
+      [[ "${NIXOS}" -eq 0 ]] && cp "${SCRIPT}" "${INSTALLSCRIPT}"
+      [[ "${NIXOS}" -eq 0 ]] && chmod a+rx "${INSTALLSCRIPT}"
+      [[ "${NIXOS}" -eq 0 ]] && echo "${SCRIPT} copied to ${INSTALLSCRIPT}" >&2
 
       # creates /etc/vpn.conf
       createConfFile
 
       # installs xdg autorun file
       # last thing to run
-      XDGAutoRun
+      [[ "${NIXOS}" -eq 0 ]] && XDGAutoRun
 
       echo "chroot setup done." >&2
-      echo "${SCRIPT} copied to ${INSTALLSCRIPT}" >&2
       echo >&2
 
       # installs Policy for CShell localhost certificate
