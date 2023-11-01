@@ -2233,7 +2233,7 @@ createChroot()
    # it is a failsafe of last measure
    # ar is provided by binutils
    #
-   if ! command -v ar &> /dev/null && ! command -v dpkg-deb &> /dev/null && command -v which &> /dev/null
+   if [[ "${NIXOS}" -eq 0 ]] && ! command -v ar &> /dev/null && ! command -v dpkg-deb &> /dev/null && command -v which &> /dev/null
    then
       if command -v eu-ar &> /dev/null 
       then
