@@ -147,7 +147,7 @@ true=0
 false=1
 
 # PATH for being called outside the command line (from xdg)
-PATH="/sbin:/bin:/usr/sbin:/usr/bin:/run/current-system/sw/bin:/run/current-system/sw/sbin:${PATH}"
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:${PATH}"
 
 # if true, cwd cshell_install.sh and/or snx_install.sh will be used
 # if present 
@@ -1909,10 +1909,10 @@ installNixOS()
 {
    echo "NixOs setup" >&2
 
-   nix-channel --update
+   # nix-channel --update
 
    # needed packages
-   nix-env -iA nixos.cacert nixos.binutils nixos.xorg.xauth nixos.xorg.xhost nixos.openssh nixos.curl nixos.debootstrap nixos.gnumake nixos.wget
+   # nix-env -iA nixos.cacert nixos.binutils nixos.xorg.xauth nixos.xorg.xhost nixos.openssh nixos.curl nixos.debootstrap nixos.gnumake nixos.wget
 }
 
 
