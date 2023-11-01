@@ -1201,7 +1201,7 @@ doStart()
 
    # while tun seems to go up
    # you cannot invoke modprobe inside a chroot 
-   /sbin/modprobe tun &> /dev/null
+   modprobe tun &> /dev/null
 
    # old bug? or if launcher was run as root?
    rm -f "${CHROOT}/tmp/cshell.fifo" &> /dev/null
