@@ -1134,8 +1134,8 @@ fixDNS()
    # SUSE - netconfig
    [[ "${SUSE}"      -eq 1 ]] && fixLinks ../run/netconfig/resolv.conf
 
-   # Arch either systemd-resolved or Network Manager
-   if [[ "${ARCH}"      -eq 1 ]] 
+   # Arch/NixOS either systemd-resolved or Network Manager
+   if [[ "${ARCH}" -eq 1 ]] && [[ "${NIXOS}" -eq 1 ]]
    then
       if [[ -f "/run/systemd/resolve/stub-resolv.conf" ]]
       then
@@ -1151,7 +1151,6 @@ fixDNS()
    [[ "${DEEPIN}"    -eq 1 ]] && fixLinks ../run/NetworkManager/resolv.conf
    [[ "${PISI}"      -eq 1 ]] && fixLinks ../run/NetworkManager/resolv.conf
    [[ "${NUTYX}"     -eq 1 ]] && fixLinks ../run/NetworkManager/resolv.conf
-   [[ "${NIXOS}"     -eq 1 ]] && fixLinks ../run/NetworkManager/resolv.conf
    # [[ "${SOLUS}"   -eq 1 ]] && fixLinks ../run/NetworkManager/resolv.conf
 
    [[ ${KWORT}       -eq 1 ]] && fixLinks "..$(find /run/dhcpcd/hook-state/resolv.conf/ -type f | head -1)"
