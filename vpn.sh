@@ -83,7 +83,7 @@ CONFFILE="/opt/etc/vpn.conf"
 VARIANT="minbase"
 #RELEASE="bullseye" # Debian 11
 RELEASE="bookworm"  # Debian 12
-DEBIANREPO="http://deb.debian.org/debian/" # fastly repo
+DEBIANREPO="https://deb.debian.org/debian/" # fastly repo
 
 # github repository for selfupdate command
 # https://github.com/ruyrybeyro/chrootvpn
@@ -97,10 +97,10 @@ GITHUB_REPO="ruyrybeyro/chrootvpn"
 # http://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.128+nmu2_all.deb
 # http://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.128+nmu2.tar.gz
 #
-VER_BOOTSTRAP="1.0.128"
-DEB_BOOTSTRAP="${DEBIANREPO}pool/main/d/debootstrap/debootstrap_${VER_BOOTSTRAP}+nmu2_all.deb"
+VER_BOOTSTRAP="1.0.137"
+DEB_BOOTSTRAP="${DEBIANREPO}pool/main/d/debootstrap/debootstrap_${VER_BOOTSTRAP}_all.deb"
 DEB_FILE=$(basename ${DEB_BOOTSTRAP})
-SRC_BOOTSTRAP="${DEBIANREPO}pool/main/d/debootstrap/debootstrap_${VER_BOOTSTRAP}+nmu2.tar.gz"
+SRC_BOOTSTRAP="${DEBIANREPO}pool/main/d/debootstrap/debootstrap_${VER_BOOTSTRAP}.tar.gz"
 
 # URL for testing if split or full VPN
 URL_VPN_TEST="https://www.debian.org"
@@ -1681,7 +1681,7 @@ InstallDebootstrapDeb()
          # shellcheck disable=SC2086
          curl $CURL_OPT --output debootstrap.tar.gz "${SRC_BOOTSTRAP}" || die "could not download ${SRC_BOOTSTRAP}"
          # gz untar it
-	 tar -zxvf debootstrap.tar.gz
+         tar -zxvf debootstrap.tar.gz
 	 
          cd debootstrap || die "was not able to cd debootstrap"
          make install
@@ -1904,17 +1904,6 @@ installVoid()
 #   eopkg install ca-certificates xhost curl debootstrap dpkg make
 #}
 
-# installs NixOs Linux
-installNixOS()
-{
-   echo "NixOs setup" >&2
-
-   # nix-channel --update
-
-   # needed packages
-   # nix-env -iA nixos.cacert nixos.binutils nixos.xorg.xauth nixos.xorg.xhost nixos.openssh nixos.curl nixos.debootstrap nixos.gnumake nixos.wget
-}
-
 
 
 # installs Gentoo
@@ -2060,15 +2049,15 @@ installPackages()
    # if NuTyx based
    [[ "${NUTYX}"     -eq 1 ]] && installNuTyx
 
-   # if NixOS based
-   [[ "${NIXOS}"     -eq 1 ]] && installNixOS
-
    # if Solus based
    #[[ "${SOLUS}"    -eq 1 ]] && installSolus
 
    # will work only if installd debootstrap is *too old*
    # or distribution has no debootstrap package
-   InstallDebootstrapDeb
+   #
+   # NOTE: NixOS must have debootstrap installed trough the package manager
+   #       otherwise it won't work.
+   [[ "${NIXOS}" -eq 0 ]] && InstallDebootstrapDeb
 
    if ! command -v debootstrap &> /dev/null
    then
